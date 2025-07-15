@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Publishing.Authoring", "Publishing.Authoring\Publishing.Authoring.csproj", "{E05900C7-2180-412D-BF1C-695A7DE88FF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monolith", "Monolith\Monolith.csproj", "{188AC20C-549F-4103-9309-0AA6D115986F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Publishing.Editorial", "Publishing.Editorial\Publishing.Editorial.csproj", "{E48120D1-4A4F-4091-B12E-8103911C689E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monolith.Host", "Monolith.Host\Monolith.Host.csproj", "{BD87E5CB-A8BF-40C5-BA57-40DDEEA8B9F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E05900C7-2180-412D-BF1C-695A7DE88FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05900C7-2180-412D-BF1C-695A7DE88FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05900C7-2180-412D-BF1C-695A7DE88FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05900C7-2180-412D-BF1C-695A7DE88FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{188AC20C-549F-4103-9309-0AA6D115986F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{188AC20C-549F-4103-9309-0AA6D115986F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{188AC20C-549F-4103-9309-0AA6D115986F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{188AC20C-549F-4103-9309-0AA6D115986F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E48120D1-4A4F-4091-B12E-8103911C689E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E48120D1-4A4F-4091-B12E-8103911C689E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E48120D1-4A4F-4091-B12E-8103911C689E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E48120D1-4A4F-4091-B12E-8103911C689E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD87E5CB-A8BF-40C5-BA57-40DDEEA8B9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD87E5CB-A8BF-40C5-BA57-40DDEEA8B9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD87E5CB-A8BF-40C5-BA57-40DDEEA8B9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD87E5CB-A8BF-40C5-BA57-40DDEEA8B9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
