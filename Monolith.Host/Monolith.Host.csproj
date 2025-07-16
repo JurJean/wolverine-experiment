@@ -8,8 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Monolith\Monolith.csproj" />
-      <ProjectReference Include="..\Publishing.Authoring\Publishing.Authoring.csproj" />
-      <ProjectReference Include="..\Publishing.Editorial\Publishing.Editorial.csproj" />
+      <ProjectReference Include="..\Example.Collaboration\Example.Collaboration.csproj" />
     </ItemGroup>
 
 </Project>
