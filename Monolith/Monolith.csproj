@@ -13,6 +13,7 @@
         <PackageReference Include="WolverineFx.Marten" Version="3.13.5"/>
         <PackageReference Include="Qowaiv" Version="7.4.3" />
         <PackageReference Include="Qowaiv.CodeGeneration.SingleValueObjects" Version="1.1.4" PrivateAssets="all" />
+        <PackageReference Include="Qowaiv.Text.Json.Serialization" Version="1.1.4" />
     </ItemGroup>
 
 </Project>
