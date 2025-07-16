@@ -11,7 +11,7 @@ public class CollaborationExtension : IWolverineExtension
         
         options.PublishMessage<Events.RoomOpened>()
             .ToKafkaTopic("room.opened");
-        options.PublishMessage<Events.RoomOpened>()
+        options.PublishMessage<Events.RoomClosed>()
             .ToKafkaTopic("room.closed");
     }
 }

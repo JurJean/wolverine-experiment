@@ -1,12 +1,15 @@
 using System.Text.Json;
 using Example.Collaboration;
 using JasperFx.CodeGeneration;
+using JasperFx.Core;
 using Marten;
 using Marten.Events;
 using Microsoft.AspNetCore.Mvc;
 using Oakton;
+using Oakton.Resources;
 using Qowaiv.Text.Json.Serialization;
 using Wolverine;
+using Wolverine.ErrorHandling;
 using Wolverine.Kafka;
 using Wolverine.Marten;
 
@@ -42,7 +45,8 @@ builder.Services.AddWolverine(wolverine =>
     wolverine.UseSystemTextJsonForSerialization();
     
     wolverine.Policies.AutoApplyTransactions();
-    
+
+    wolverine.CodeGeneration.SourceCodeWritingEnabled = false;
     wolverine.CodeGeneration.TypeLoadMode = builder.Environment.IsDevelopment()
         ? TypeLoadMode.Dynamic
         : TypeLoadMode.Static;
@@ -50,11 +54,23 @@ builder.Services.AddWolverine(wolverine =>
     wolverine.Durability.Mode = builder.Environment.IsDevelopment()
         ? DurabilityMode.Solo
         : DurabilityMode.Balanced;
+    
+    wolverine.Policies.OnAnyException()
+        .RetryWithCooldown(50.Milliseconds(), 100.Milliseconds(), 250.Milliseconds());
+
+    wolverine.Policies.UseDurableInboxOnAllListeners();
+    wolverine.Policies.UseDurableOutboxOnAllSendingEndpoints();
+
+    wolverine.Policies.AutoApplyTransactions();
 
     wolverine.UseKafka("localhost:9092")
         .AutoProvision(provision =>
         {
             provision.AllowAutoCreateTopics = true;
+        })
+        .ConfigureClient(client =>
+        {
+            client.AllowAutoCreateTopics = true;
         })
         .ConfigureProducers(producers =>
         {
@@ -63,6 +79,7 @@ builder.Services.AddWolverine(wolverine =>
             producers.EnableIdempotence = true;
         });
 
+    wolverine.Services.AddResourceSetupOnStartup();
     wolverine.Services.AddWolverineExtension<CollaborationExtension>();
 });
 
