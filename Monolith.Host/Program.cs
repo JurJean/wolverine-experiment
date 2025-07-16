@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Oakton;
 using Qowaiv.Text.Json.Serialization;
 using Wolverine;
+using Wolverine.Kafka;
 using Wolverine.Marten;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,12 +29,17 @@ builder.Services.AddWolverine(wolverine =>
                 ? TypeLoadMode.Auto
                 : TypeLoadMode.Static;
             marten.Events.StreamIdentity = StreamIdentity.AsString;
+            
+            marten.UseSystemTextJsonForSerialization();
         })
-
+        .UseLightweightSessions()
         .IntegrateWithWolverine(integrate =>
         {
+            integrate.UseFastEventForwarding = true;
             integrate.UseWolverineManagedEventSubscriptionDistribution = true;
         });
+    
+    wolverine.UseSystemTextJsonForSerialization();
     
     wolverine.Policies.AutoApplyTransactions();
     
@@ -44,8 +50,20 @@ builder.Services.AddWolverine(wolverine =>
     wolverine.Durability.Mode = builder.Environment.IsDevelopment()
         ? DurabilityMode.Solo
         : DurabilityMode.Balanced;
-    
-    wolverine.Discovery.IncludeAssembly(typeof(RoomId).Assembly);
+
+    wolverine.UseKafka("localhost:9092")
+        .AutoProvision(provision =>
+        {
+            provision.AllowAutoCreateTopics = true;
+        })
+        .ConfigureProducers(producers =>
+        {
+            producers.BatchSize = 100;
+            producers.EnableGaplessGuarantee = true;
+            producers.EnableIdempotence = true;
+        });
+
+    wolverine.Services.AddWolverineExtension<CollaborationExtension>();
 });
 
 builder.Host.ApplyOaktonExtensions();
