@@ -1,4 +1,4 @@
-﻿namespace Example.Collaboration;
+﻿namespace Monolith.Host.Example.Collaboration;
 
 using static Events;
 

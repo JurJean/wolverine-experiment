@@ -1,6 +1,6 @@
 ﻿using Wolverine.Marten;
 
-namespace Example.Collaboration;
+namespace Monolith.Host.Example.Collaboration;
 
 using static Commands;
 using static Events;

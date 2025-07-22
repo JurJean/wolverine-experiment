@@ -1,7 +1,7 @@
 ﻿using Wolverine;
 using Wolverine.Kafka;
 
-namespace Example.Collaboration;
+namespace Monolith.Host.Example.Collaboration;
 
 public class CollaborationExtension : IWolverineExtension
 {

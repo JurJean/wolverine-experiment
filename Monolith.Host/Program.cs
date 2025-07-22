@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Example.Collaboration;
 using JasperFx;
 using JasperFx.Core;
 using JasperFx.Events;
@@ -7,6 +6,7 @@ using JasperFx.Events.Daemon;
 using JasperFx.Resources;
 using Marten;
 using Microsoft.AspNetCore.Mvc;
+using Monolith.Host.Example.Collaboration;
 using Qowaiv.Text.Json.Serialization;
 using Wolverine;
 using Wolverine.ErrorHandling;

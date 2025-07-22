@@ -1,10 +1,10 @@
 ﻿using Wolverine.Attributes;
+using Wolverine.Marten;
 
-namespace Example.Collaboration;
+namespace Monolith.Host.Example.Collaboration;
 
 public sealed class ExampleHandler
 {
-    [WolverineHandler]
     public void Handle(Events.RoomOpened e)
     {
         Console.WriteLine("Room has been opened!!!");
