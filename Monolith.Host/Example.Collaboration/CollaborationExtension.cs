@@ -15,9 +15,9 @@ public class CollaborationExtension : IWolverineExtension
         Console.WriteLine(options.DescribeHandlerMatch(typeof(RoomHandler)));
         Console.WriteLine("-------------");
         
-        options.PublishMessage<Events.RoomOpened>()
-            .ToKafkaTopic("room.opened");
-        options.PublishMessage<Events.RoomClosed>()
-            .ToKafkaTopic("room.closed");
+        // options.PublishMessage<Events.RoomOpened>()
+        //     .ToKafkaTopic("room.opened");
+        // options.PublishMessage<Events.RoomClosed>()
+        //     .ToKafkaTopic("room.closed");
     }
 }
