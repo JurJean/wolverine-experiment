@@ -4,6 +4,7 @@ using JasperFx.CodeGeneration;
 using JasperFx.Core;
 using Marten;
 using Marten.Events;
+using Marten.Events.Daemon.Resiliency;
 using Microsoft.AspNetCore.Mvc;
 using Oakton;
 using Oakton.Resources;
@@ -35,12 +36,12 @@ builder.Services.AddWolverine(wolverine =>
             
             marten.UseSystemTextJsonForSerialization();
         })
+        .AddAsyncDaemon(DaemonMode.HotCold)
         .UseLightweightSessions()
-        .IntegrateWithWolverine(integrate =>
-        {
-            integrate.UseFastEventForwarding = true;
-            integrate.UseWolverineManagedEventSubscriptionDistribution = true;
-        });
+        .IntegrateWithWolverine()
+        .PublishEventsToWolverine("all");
+
+    wolverine.Discovery.DisableConventionalDiscovery();
     
     wolverine.UseSystemTextJsonForSerialization();
     
@@ -67,10 +68,6 @@ builder.Services.AddWolverine(wolverine =>
         .AutoProvision(provision =>
         {
             provision.AllowAutoCreateTopics = true;
-        })
-        .ConfigureClient(client =>
-        {
-            client.AllowAutoCreateTopics = true;
         })
         .ConfigureProducers(producers =>
         {
