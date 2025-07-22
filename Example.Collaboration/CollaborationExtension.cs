@@ -8,7 +8,6 @@ public class CollaborationExtension : IWolverineExtension
     public void Configure(WolverineOptions options)
     {
         options.Discovery.IncludeAssembly(typeof(CollaborationExtension).Assembly);
-        options.Discovery.IncludeType<ExampleHandler>();
         
         Console.WriteLine("-------------");
         Console.WriteLine(options.DescribeHandlerMatch(typeof(ExampleHandler)));

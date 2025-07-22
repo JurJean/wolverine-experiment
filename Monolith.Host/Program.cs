@@ -1,13 +1,12 @@
 using System.Text.Json;
 using Example.Collaboration;
-using JasperFx.CodeGeneration;
+using JasperFx;
 using JasperFx.Core;
+using JasperFx.Events;
+using JasperFx.Events.Daemon;
+using JasperFx.Resources;
 using Marten;
-using Marten.Events;
-using Marten.Events.Daemon.Resiliency;
 using Microsoft.AspNetCore.Mvc;
-using Oakton;
-using Oakton.Resources;
 using Qowaiv.Text.Json.Serialization;
 using Wolverine;
 using Wolverine.ErrorHandling;
@@ -25,13 +24,10 @@ builder.Services
 
 builder.Services.AddWolverine(wolverine =>
 {
+    builder.Services.CritterStackDefaults(_ => { });
     wolverine.Services.AddMarten(marten =>
         {
             marten.Connection("User ID=username;Password=password;Host=localhost;Port=5432;Database=monolith;");
-            marten.SourceCodeWritingEnabled = false;
-            marten.GeneratedCodeMode = builder.Environment.IsDevelopment()
-                ? TypeLoadMode.Auto
-                : TypeLoadMode.Static;
             marten.Events.StreamIdentity = StreamIdentity.AsString;
             
             marten.UseSystemTextJsonForSerialization();
@@ -41,16 +37,9 @@ builder.Services.AddWolverine(wolverine =>
         .IntegrateWithWolverine()
         .PublishEventsToWolverine("all");
 
-    wolverine.Discovery.DisableConventionalDiscovery();
-    
     wolverine.UseSystemTextJsonForSerialization();
     
     wolverine.Policies.AutoApplyTransactions();
-
-    wolverine.CodeGeneration.SourceCodeWritingEnabled = false;
-    wolverine.CodeGeneration.TypeLoadMode = builder.Environment.IsDevelopment()
-        ? TypeLoadMode.Dynamic
-        : TypeLoadMode.Static;
 
     wolverine.Durability.Mode = builder.Environment.IsDevelopment()
         ? DurabilityMode.Solo
@@ -80,12 +69,11 @@ builder.Services.AddWolverine(wolverine =>
     wolverine.Services.AddWolverineExtension<CollaborationExtension>();
 });
 
-builder.Host.ApplyOaktonExtensions();
+builder.Host.ApplyJasperFxExtensions();
 
 var app = builder.Build();
 
-app.MapPost("room/test", ([FromServices] IMessageBus bus) => Console.WriteLine("FOO"));
 app.MapPost("room/open", ([FromBody] Commands.OpenRoom command, [FromServices] IMessageBus bus) => bus.InvokeAsync(command));
 app.MapPost("room/close", ([FromBody] Commands.CloseRoom command, [FromServices] IMessageBus bus) => bus.InvokeAsync(command));
 
-await app.RunOaktonCommands(args);
+await app.RunJasperFxCommands(args);
