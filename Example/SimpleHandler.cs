@@ -9,19 +9,16 @@ namespace Example;
 [WolverineHandler]
 public sealed class SimpleHandler
 {
-    public async Task Handle(
+    public DeliveryMessage<Events.SomethingWasScheduled> Handle(
         Commands.ScheduleSomething command,
-        IMessageContext context,
         [ReadAggregate(Required = false)] SimpleAggregate? aggregate)
     {
-        Console.WriteLine("Scheduling something...");
-
-        await context.ScheduleAsync(
-            new Events.SomethingWasScheduled { Id = command.Id },
-            TimeSpan.FromSeconds(30));
+        Console.WriteLine("Scheduling event...");
+        return new Events.SomethingWasScheduled { Id = command.Id }
+            .DelayedFor(TimeSpan.FromSeconds(30));
     }
     
-    public void Handle(Events.SomethingWasScheduled command)
+    public void Handle(Events.SomethingWasScheduled @event)
     {
         Console.WriteLine("Received scheduled event!");
     }
