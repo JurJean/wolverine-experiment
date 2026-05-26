@@ -39,12 +39,11 @@ builder.Services.AddWolverine(wolverine =>
     wolverine.Policies.OnAnyException()
         .RetryWithCooldown(50.Milliseconds(), 100.Milliseconds(), 250.Milliseconds());
 
-    wolverine.Policies.UseDurableLocalQueues();
     wolverine.Policies.UseDurableInboxOnAllListeners();
     wolverine.Policies.UseDurableOutboxOnAllSendingEndpoints();
 
+    wolverine.Policies.UseDurableLocalQueues();
     wolverine.Policies.AllLocalQueues(queue => { queue.UseDurableInbox(); });
-
     wolverine.Policies.AlwaysMakeScheduledMessagesDurable();
 
     wolverine.Policies.AutoApplyTransactions();
@@ -55,7 +54,7 @@ var app = builder.Build();
 app.MapOpenApi();
 app.MapScalarApiReference();
 
-app.MapPost("schedule", ([FromBody] Commands.ScheduleSomething command, [FromServices] IMessageContext context) =>
+app.MapPost("schedule", ([FromBody] Commands.ScheduleSomething command, [FromServices] IMessageBus context) =>
 context.PublishAsync(command));
 
 return await app.RunJasperFxCommands(args);
