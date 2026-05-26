@@ -33,8 +33,6 @@ builder.Services.AddMarten(marten =>
         marten.Connection(builder.Configuration.GetConnectionString("postgres")
                           ?? throw new InvalidOperationException("ConnectionString 'postgres' is not configured"));
 
-        marten.ApplyChangesLockId = 4004;
-
         marten.UseSystemTextJsonForSerialization(EnumStorage.AsString, Casing.CamelCase);
     })
     .UseLightweightSessions()
