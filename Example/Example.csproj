@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Example</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Marten" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0"/>
+        <PackageReference Include="Scalar.AspNetCore" Version="2.14.14" />
+        <PackageReference Include="WolverineFx" Version="6.0.1"/>
+        <PackageReference Include="WolverineFx.Marten" Version="6.0.1"/>
+        <PackageReference Include="WolverineFx.RuntimeCompilation" Version="6.0.1" />
+    </ItemGroup>
+    
+</Project>
