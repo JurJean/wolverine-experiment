@@ -11,7 +11,8 @@ public sealed class SimpleHandler
 {
     public async Task Handle(
         Commands.ScheduleSomething command,
-        IMessageContext context)
+        IMessageContext context,
+        [ReadAggregate(Required = false)] SimpleAggregate? aggregate)
     {
         Console.WriteLine("Scheduling something...");
 
